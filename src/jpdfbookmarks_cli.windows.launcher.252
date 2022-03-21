@@ -1,0 +1,2 @@
+win-console=true
+java-options="-splash:" "-ms64m" "-mx512m"

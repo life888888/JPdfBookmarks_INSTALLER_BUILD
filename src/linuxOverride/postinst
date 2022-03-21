@@ -1,0 +1,50 @@
+#!/bin/sh
+# postinst script for jpdfbookmarks
+#
+# see: dh_installdeb(1)
+
+set -e
+
+# summary of how this script can be called:
+#        * <postinst> `configure' <most-recently-configured-version>
+#        * <old-postinst> `abort-upgrade' <new version>
+#        * <conflictor's-postinst> `abort-remove' `in-favour' <package>
+#          <new-version>
+#        * <postinst> `abort-remove'
+#        * <deconfigured's-postinst> `abort-deconfigure' `in-favour'
+#          <failed-install-package> <version> `removing'
+#          <conflicting-package> <version>
+# for details, see https://www.debian.org/doc/debian-policy/ or
+# the debian-policy package
+
+case "$1" in
+    configure)
+xdg-desktop-menu install /opt/jpdfbookmarks/lib/jpdfbookmarks-jpdfbookmarks.desktop
+xdg-mime install /opt/jpdfbookmarks/lib/jpdfbookmarks-jpdfbookmarks-MimeInfo.xml
+xdg-desktop-menu install /opt/jpdfbookmarks/lib/jpdfbookmarks-jpdfbookmarks_cli.desktop
+        # register gedit as a jpdfbookmarks in the alternatives system
+        update-alternatives \
+            --install \
+                /usr/bin/jpdfbookmarks \
+                jpdfbookmarks \
+                /opt/jpdfbookmarks/bin/jpdfbookmarks \
+                50 
+        # register gedit as a jpdfbookmarks in the alternatives system
+        update-alternatives \
+            --install \
+                /usr/bin/jpdfbookmarks_cli \
+                jpdfbookmarks_cli \
+                /opt/jpdfbookmarks/bin/jpdfbookmarks_cli \
+                50      
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+exit 0

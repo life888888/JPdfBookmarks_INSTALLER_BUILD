@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=jpdfbookmarks_cli
+Comment=jpdfbookmarks
+Exec=/opt/jpdfbookmarks/bin/jpdfbookmarks_cli %f
+Icon=/opt/jpdfbookmarks/lib/jpdfbookmarks_cli.png
+Terminal=true
+Type=Application
+Categories=Office
+MimeType=application/pdf

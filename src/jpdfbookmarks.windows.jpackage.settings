@@ -1,0 +1,8 @@
+--type msi
+--win-shortcut
+--win-shortcut-prompt
+--win-menu
+--win-menu-group Office
+--win-help-url http://flavianopetrocchi.blogspot.com/
+--icon "jpdfbookmarks/jpdfbookmarks.ico"
+--win-dir-chooser

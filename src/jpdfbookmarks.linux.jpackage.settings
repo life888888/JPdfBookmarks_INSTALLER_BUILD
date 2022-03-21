@@ -1,0 +1,6 @@
+--linux-shortcut
+--linux-app-category Office
+--linux-menu-group "Office"
+--about-url "http://flavianopetrocchi.blogspot.com/"
+--icon "jpdfbookmarks/jpdfbookmarks.png"
+--resource-dir linuxOverride
