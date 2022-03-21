@@ -72,14 +72,14 @@ sed -i -e 's/.*/%dir "&"/' %{package_filelist}
 xdg-desktop-menu install /opt/jpdfbookmarks/lib/jpdfbookmarks-jpdfbookmarks.desktop
 xdg-mime install /opt/jpdfbookmarks/lib/jpdfbookmarks-jpdfbookmarks-MimeInfo.xml
 xdg-desktop-menu install /opt/jpdfbookmarks/lib/jpdfbookmarks-jpdfbookmarks_cli.desktop
-        # register gedit as a jpdfbookmarks in the alternatives system
+        # register /usr/bin/jpdfbookmarks as a jpdfbookmarks in the alternatives system
         update-alternatives \
             --install \
                 /usr/bin/jpdfbookmarks \
                 jpdfbookmarks \
                 /opt/jpdfbookmarks/bin/jpdfbookmarks \
                 50 
-        # register gedit as a jpdfbookmarks in the alternatives system
+        # register /usr/bin/jpdfbookmarks_cli as a jpdfbookmarks_cli in the alternatives system
         update-alternatives \
             --install \
                 /usr/bin/jpdfbookmarks_cli \
