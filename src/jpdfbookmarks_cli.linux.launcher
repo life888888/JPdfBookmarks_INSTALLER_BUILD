@@ -1,0 +1,2 @@
+java-options="-Djava.util.logging.config.file=$APPDIR/conf/jpdfbookmarks.logging.properties" "-splash:" "-ms64m" "-mx512m"
+
