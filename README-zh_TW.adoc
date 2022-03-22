@@ -1,0 +1,737 @@
+= JPdfBookmarks INSTALLER BUILD
+life888888
+:doctype: article
+:encoding: utf-8
+:lang: zh
+:toc: left
+:numbered:
+:experimental:
+:imagesdir: images
+
+////
+:figure-caption!:
+////
+
+這個是用來協助 jpdfbookmarks 建立 Native Installer (Windows .msi , Linux .rpm , Linux .deb) 的輔助工具指令檔。
+
+== 這個輔助工具指令可以作到的要求
+
+* 產生 Native Installer (Windows .msi , Linux .rpm , Linux .deb)
+* 已經封裝 JRE , 使用者不需要另外安裝 JRE
+* 使用者可以在 GUI 檔案總管中 , 點選 PDF 檔 , 按下滑鼠右鍵後 , 系統跳出 Open With , 可以讓 jpdfbookmarks 來開啟 PDF
+* 使用者也可以在 terminal 中 , 執行 jpdfbookmarks_cli 指令，以指令的方式執行。
+* 封裝程式不再需要將這些檔案打包進去:
+** launch4j 產生的 exe (jpdfbookmarks.exe,jpdfbookmarks_cli.exe)
+** 以及 jpdfbookmarks, jpdfbookmarks_cli, link_this_in_linux_path.sh, link_this_in_linux_path_cli.sh
+* (Linux)使用者不需要手動去做 , 將安裝目錄加入 PATH 環境變數 或是
+
+[source,bash]
+----
+cd /usr/local/bin
+ln -s /home/user/jpdfbookmarks/link_this_in_linux_path.sh jpdfbookmarks
+ln -s /home/user/jpdfbookmarks/link_this_in_linux_path_cli.sh jpdfbookmarks_cli
+----
+
+== 如何使用與執行?
+
+只需要下載本專案即可,然後根據指示你的需要執行對應的指令檔。
+
+[source,bash]
+----
+git clone https://github.com/life888888/JPdfBookmarks_INSTALLER_BUILD.git
+cd JPdfBookmarks_INSTALLER_BUILD/src
+----
+
+== 選擇你需要執行對應的指令檔
+
+* 1. 平台( linux-rpm, linux-deb , windows)
+* 2. 版本( jpdfbookmarks 2.5.2 , 2.5.4 , 3.0.2)
+
+
+=== Linux - RPM
+
+==== 系統需求
+
+* JDK 17 (使用 SDKMAN 安裝就可以了)
+* **Development Tools** 一定要安裝(`sudo yum groupinstall 'Development Tools'`)
+
+指令以下寫好如下:
+
+[source,bash]
+----
+cd JPdfBookmarks_INSTALLER_BUILD/src
+./build-installer-rpm-pre-setup.sh
+----
+
+==== 選擇你要封裝的版本
+
+[source,bash]
+----
+# jpdfbookmarks 2.5.2
+./build-installer-rpm-2.5.2.sh
+
+# jpdfbookmarks 2.5.4
+./build-installer-rpm-2.5.4.sh
+
+# jpdfbookmarks 3.0.2
+./build-installer-rpm-3.0.2.sh
+----
+
+=== Linux - DEB
+
+==== 系統需求
+
+* JDK 17 (使用 SDKMAN 安裝就可以了)
+
+指令以下寫好如下:
+
+[source,bash]
+----
+cd JPdfBookmarks_INSTALLER_BUILD/src
+./build-installer-deb-pre-setup.sh
+----
+
+==== 選擇你要封裝的版本
+
+[source,bash]
+----
+# jpdfbookmarks 2.5.2
+./build-installer-deb-2.5.2.sh
+
+# jpdfbookmarks 2.5.4
+./build-installer-deb-2.5.4.sh
+
+# jpdfbookmarks 3.0.2
+./build-installer-deb-3.0.2.sh
+----
+
+=== Windows
+
+系統需求:
+
+* JDK 17
+* WiX SDK 3.x
+
+==== 安裝 JDK 17
+
+需要人工執行以下作業
+
+* 下載 JDK 17 ( https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.2%2B8/OpenJDK17U-jdk_x64_windows_hotspot_17.0.2_8.msi )
+* 點擊 OpenJDK17U-jdk_x64_windows_hotspot_17.0.2_8.msi , 執行安裝 JDK 17
+** 安裝時 , 請記得下拉勾選 設定 JAVA_HOME 以及 Oracle Reg Keys
+
+==== 安裝 WiX 3.x
+
+指令以下寫好如下:
+
+[source,bash]
+----
+cd JPdfBookmarks_INSTALLER_BUILD\src
+build-installer-msi-pre-setup.bat
+----
+
+==== 選擇你要封裝的版本
+
+[source,bash]
+----
+build-installer-msi-2.5.2.bat
+
+build-installer-msi-2.5.4.bat
+
+build-installer-msi-3.0.2.bat
+----
+
+到這裡，你應該能夠完成你的 jpdfbookmarks 的 native installer 的打包。
+
+之後是碎碎念！如果你想要知道更多技術細節，再往下看，否則你現在就可以關閉這份文件。
+
+== 封裝平台與測試平台
+
+* Linux - DEB - Ubuntu 20.04
+* Linux - RPM - Oracle Linux 8 (https://oracle.github.io/vagrant-projects/boxes/oraclelinux/8-btrfs.json) 
+* Windows 10 - MSEdge on Win10 (x64) Stable 1809 - VirtualBox (https://developer.microsoft.com/microsoft-edge/tools/vms/)
+
+
+=== 本輔助工具的封裝產出
+
+以下產出都是透過本工具指令產出：
+
+* JPdfBookmarks-2.5.2 (https://github.com/life888888/JPdfBookmarks/releases/tag/v2.5.2)
+** jpdfbookmarks-2.5.2-1.x86_64.rpm (https://github.com/life888888/JPdfBookmarks/releases/download/v2.5.2/jpdfbookmarks-2.5.2-1.x86_64.rpm)
+** jpdfbookmarks_2.5.2-1_amd64.deb (https://github.com/life888888/JPdfBookmarks/releases/download/v2.5.2/jpdfbookmarks_2.5.2-1_amd64.deb) 
+** jpdfbookmarks-2.5.2.msi (https://github.com/life888888/JPdfBookmarks/releases/download/v2.5.2/jpdfbookmarks-2.5.2.msi) 
+
+
+* JPdfBookmarks-2.5.4 (https://github.com/life888888/JPdfBookmarks/releases/tag/v2.5.4)
+** jpdfbookmarks-2.5.4-1.x86_64.rpm (https://github.com/life888888/JPdfBookmarks/releases/download/v2.5.4/jpdfbookmarks-2.5.4-1.x86_64.rpm)
+** jpdfbookmarks_2.5.4-1_amd64.deb (https://github.com/life888888/JPdfBookmarks/releases/download/v2.5.4/jpdfbookmarks_2.5.4-1_amd64.deb)
+** jpdfbookmarks-2.5.4.msi (https://github.com/life888888/JPdfBookmarks/releases/download/v2.5.4/jpdfbookmarks-2.5.4.msi)
+
+
+* JPdfBookmarks-3.0.2 (https://github.com/life888888/JPdfBookmarks/releases/tag/v3.0.2-r1-snapshot)
+** jpdfbookmarks-3.0.2-snapshot-1.x86_64.rpm (https://github.com/life888888/JPdfBookmarks/releases/download/v3.0.2-r1-snapshot/jpdfbookmarks-3.0.2-snapshot-1.x86_64.rpm)
+** jpdfbookmarks_3.0.2-snapshot-1_amd64.deb (https://github.com/life888888/JPdfBookmarks/releases/download/v3.0.2-r1-snapshot/jpdfbookmarks_3.0.2-snapshot-1_amd64.deb)
+** jpdfbookmarks-3.0.2.msi (https://github.com/life888888/JPdfBookmarks/releases/download/v3.0.2-r1-snapshot/jpdfbookmarks-3.0.2.msi)
+
+=== 限制
+
+* Windows msi 檔, 安裝時 , 請建議使用者 , 變更 jpdfbookmarks 安裝目錄於 沒有包含空白字元的路徑 , 例如:
+** C:\TOOLS\jpdfbookmarks
+* Windows msi 檔, 目前**不會自動**把 jpdfbookmarks 安裝目錄 加入到 PATH 環境變數中 , 需要使用者自行加入。
+** 如果沒有把 jpdfbookmarks 安裝目錄加入 PATH 環境變數 , 就是 使用者 無法在任意目錄中直接執行類似 `jpdfbookmarks_cli -d -o INDEX.txt README-zh_TW.pdf` 的指令 , 必須要把 jpdfbookmarks_cli 的完整路徑輸入 , 例如 `C:\TOOLS\jpdfbookmarks\jpdfbookmarks_cli -d -o INDEX.txt README-zh_TW.pdf`
+** 可以讓使用者執行以下指令 `build-installer-msi-after-install.bat` 或是  `setx PATH "C:\TOOLS\jpdfbookmarks;%PATH%"` 來設定 PATH 環境變數
+** 注意: 使用者 安裝 jpdfbookmarks-x.x.x.msi 時 , 安裝目錄必須要變更為 `C:\TOOLS\jpdfbookmarks`
+* 沒有 MacOS 的封裝指令 ?
+** 對,就是沒有! 因為我沒有 MacOS 的環境可以測試!!!
+
+== 測試報告
+
+完成安裝後, 如何驗證是否可以使用？ 可以從這裡下載　測試的 PDF 檔案 (https://github.com/life888888/jpdfbookmarks-test-pdf-examples/releases/download/v1.0.0/jpdfbookmarks-test-pdf-examples-dist-1.0.0.tar.xz)
+
+=== 測試封裝檢查項目
+
+- [✓] jpdfbookmark 執行時,是否出現 splash 畫面
+- [✓] jpdfbookmark_cli 執行時,是否會出現 console/terminal視窗
+- [✓] jpdfbookmark_cli 執行時,不應出現 splash 畫面
+- [✓] 是否在任一路徑都能執行 jpdfbookmark 或 jpdfbookmark_cli (PATH設定是否成功) - Linux
+- [✓] 在 檔案總管, 點選 PDF 時, 是否可以用滑鼠右鍵 出現 jpdfbookmark ?
+- [✓] 在 檔案總管, 點選 PDF 時, 是否可以用滑鼠右鍵 在 Open With Application 的清單中 , 是否出現 jpdfbookmark 可以選取？
+
+=== Windows
+
+==== 安裝畫面
+
+.點擊 jpdfbookmarks-x.x.x.msi 進行安裝
+image:win-install-001.png[點擊 jpdfbookmarks-x.x.x.msi 進行安裝]
+
+.點擊 Next
+image:win-install-002.png[點擊 Next]
+
+.點擊 輸入框 , 變更安裝目錄 , 輸入安裝的路徑 , 不要包含`空白`字元
+image:win-install-003.png[點擊 輸入框 , 變更安裝目錄 , 輸入安裝的路徑 , 不要包含`空白`字元]
+
+.變更 安裝目錄為 C:\TOOLS\jpdfbookmarks 後 , 點擊 Next (只要安裝的路徑不要包含空白即可) 
+image:win-install-004.png[變更 安裝目錄為 C:\TOOLS\jpdfbookmarks 後 , 點擊 Next]
+
+.點擊 Next, 預設的 create shortcut 都保持勾選
+image:win-install-005.png[點擊 Next, 預設的 create shortcut 都保持勾選]
+
+.點擊 Install
+image:win-install-006.png[點擊 Install]
+
+.點擊 Yes, 系統詢問是否同意安裝程式變更裝置
+image:win-install-007.png[點擊 Yes, 系統詢問是否同意安裝程式變更裝置]
+
+.點擊 Finish,完成 jpdfbookmarks 的安裝
+image:win-install-008.png[點擊 Finish,完成 jpdfbookmarks 的安裝]
+
+
+[IMPORTANT]
+.因為安裝程式目前還沒有設定將 jpdfbookmarks安裝目錄自動加入 PATH 環境變數
+====
+所以我們需要使用者自己手動將 jpdfbookmarks 安裝目錄 加入至 PATH 環境變數的設定中。
+請在安裝說明文件中告知使用者。
+
+或者讓使用者開啟 DOS CMD 視窗, 手動執行這個指令: `build-installer-msi-after-install.bat` 或是 `setx PATH "C:\TOOLS\jpdfbookmarks;%PATH%"`
+
+但是前提是使用者在安裝過程中, 修改的 jpdfbookmarks 的安裝目錄是 `C:\TOOLS\jpdfbookmarks`。
+
+如果使用者是設定為其他安裝目錄，必須要自己修改指令。
+====
+
+==== 測試 Open With
+
+.點擊 README-zh_TW.pdf, 按下滑鼠右鍵, 點擊 Open with, 應該可以看到 jpdfbookmarks 圖示 , 以及 `Choose another application`
+image:win-open-with.png[點擊 README-zh_TW.pdf, 按下滑鼠右鍵, 點擊 Open with]
+
+
+==== 初次使用, License 同意畫面
+
+.初次使用, License 同意畫面, 點擊 Agree
+image:win-license.png[初次使用, License 同意畫面, 點擊 Agree]
+
+.jpdfbookmarks 正常顯示包含中文bookmarks的PDF
+image:win-test-001.png[jpdfbookmarks 正常顯示包含中文bookmarks的PDF]
+
+=== 測試 console / terminal 模式
+
+.開啟DOS CMD視窗,輸入指令: `jpdfbookmarks_cli -e UTF-8 -d -o INDEX.txt README-zh_CN.pdf`
+image:win-test-002.png[開啟DOS CMD視窗,輸入 指令]
+
+.修改 INDEX.txt, 輸入指令: `jpdfbookmarks_cli -e UTF-8 -a INDEX.txt -o README-zh_CN_NEW.pdf README-zh_CN.pdf` 產生套用 bookmarks 的新的 PDF 檔
+image:win-test-003.png[修改 INDEX.txt, 輸入指令]
+
+.檢視 README-zh_CN_NEW.pdf 的 bookmarks 是新的設定(INDEX.txt)
+image:win-test-004.png[檢視 README-zh_CN_NEW.pdf 的 bookmarks 是新的設定(INDEX.txt)]
+
+=== Linux - RPM
+
+==== 安裝畫面
+
+.選擇 jpdfbookmarks-x.x.x.rpm, 按下滑鼠右鍵 `Open with Software install`
+image:linux-rpm-install-001.png[選擇 jpdfbookmarks-x.x.x.rpm, 按下滑鼠右鍵 `Open with Software install`]
+
+或是執行指令安裝 `sudo yum localinstall -y jpdfbookmarks-3.0.2-snapshot-1.x86_64.rpm`
+
+.出現 Software 視窗, 點擊 Install, 進行安裝
+image:linux-rpm-install-002.png[點擊 Install]
+
+==== 測試 Open With
+
+.點選 README.pdf , 按下滑鼠右鍵 , 出現 `Open With jpdfbookmarks` 以及 `Open With Other Application`
+image:linux-rpm-open-with.png[點選 README.pdf , 按下滑鼠右鍵 , 出現 `Open With jpdfbookmarks` 以及 `Open With Other Application`]
+
+.點擊 `Open With Other Application`, 出現 Select Application 視窗, 下方清單出現 jpdfbookmarks, jpdfbookmarks_cli, 點擊 **jpdfbookmarks**
+image:linux-rpm-open-with-2.png[點擊 `Open With Other Application`, 出現 Select Application 視窗, 下方清單出現 jpdfbookmarks, jpdfbookmarks_cli]
+
+==== 初次使用, License 同意畫面
+
+.初次使用, License 同意畫面, 點擊 Agree
+image:linux-rpm-license.png[.初次使用, License 同意畫面, 點擊 Agree]
+
+
+==== jpdfbookmarks GUI
+
+.出現 jpdfbookmarks 開啟 README.pdf 的畫面
+image:linux-rpm-test-001.png[出現 jpdfbookmarks 開啟 README.pdf 的畫面]
+
+==== 測試 jpdfbooks_cli Console/Terminal 模式
+
+.開啟 Terminal, 點擊 滑鼠右鍵, 選擇 `Open Terminal`
+image:linux-rpm-test-002.png[開啟 Terminal, 點擊 滑鼠右鍵, 選擇 `Open Terminal`]
+
+.輸入指令 `jpdfbookmarks_cli --help`,如果有出現如圖訊息表示安裝程式的設定正常
+image:linux-rpm-test-003.png[輸入指令 `jpdfbookmarks_cli --help`]
+
+.輸入指令 ‵jpdfbookmarks_cli -d -o INDEX.txt README-zh_TW.pdf‵ 產出 INDEX.txt
+image:linux-rpm-test-004.png[輸入指令 ‵jpdfbookmarks_cli -d -o INDEX.txt README-zh_TW.pdf‵ 產出 INDEX.txt]
+
+.開啟 INDEX.txt,可以看到有正常輸出 bookmarks
+image:linux-rpm-test-005.png[開啟 INDEX.txt,可以看到有正常輸出 bookmarks]
+
+image:linux-rpm-test-006.png[]
+
+image:linux-rpm-test-007.png[]
+
+.故意輸入不存在的 pdf 作為測試, `jpdfbookmarks_cli xxx.pdf`,可以到 HOME 目錄找到 `jpdfbookmarks.0.log` 檢視錯誤訊息內容
+image:linux-rpm-test-008.png[故意輸入不存在的 pdf 作為測試, `jpdfbookmarks_cli xxx.pdf`]
+
+==== 測試畫面
+
+
+=== Linux - DEB
+
+==== 安裝畫面
+
+可以直接使用指令安裝: `sudo dpkg -i jpdfbookmarks_x.x.x.deb`, 
+
+例如：‵sudo dpkg -i jpdfbookmarks_3.0.2-snapshot-1_amd64.deb‵
+
+
+==== 測試 Open With
+
+.點擊 README-zh_TW.pdf,按下滑鼠右鍵出現 `以其他應用程式開啟`(Open With Other Application)
+image:linux-deb-open-with.png[點擊 README-zh_TW.pdf,按下滑鼠右鍵出現 `以其他應用程式開啟`(Open With Other Application)]
+
+.選擇應用程式視窗 ,點擊 jpdfbookmarks, 點擊 選取(Select)
+image:linux-deb-open-with-2.png[選擇應用程式視窗 ,點擊 jpdfbookmarks, 點擊 選取(Select)]
+
+==== 初次使用, License 同意畫面
+
+.初次使用, License 同意畫面, 點擊 Agree
+image:linux-deb-license.png[初次使用, License 同意畫面, 點擊 同意(Agree)]
+
+==== 中文 Bookmarks 顯示正常畫面
+
+.中文 Bookmarks 顯示正常畫面, 只有 jpdfbookmarks 2.5.4, 3.0.2 可以正常顯示 中文/日文/韓文 Bookmarks; 
+image:fix.png[中文 Bookmarks 顯示正常畫面, 只有 jpdfbookmarks 2.5.4, 3.0.2 可以正常顯示 中文/日文/韓文 Bookmarks]
+
+如果想要 jpdfbookmarks 可以正常顯示 中文/日文/韓文, 請到此下載:
+
+* JPdfBookmarks-2.5.4 (https://github.com/life888888/JPdfBookmarks/releases/tag/v2.5.4)
+* JPdfBookmarks-3.0.2 (https://github.com/life888888/JPdfBookmarks/releases/tag/v3.0.2-r1-snapshot)
+
+==== 檢查 jpdfbookmarks 版本
+
+.點擊 Menu Help, 點選 關於(About)
+image:linux-deb-about-3.0.2_1.png[點擊 Menu Help, 點選 關於(About)]
+
+.出現 版本編號
+image:linux-deb-about-3.0.2_2.png[出現 版本編號]
+
+== TODO
+
+- [ ] Windows 的 msi : 在 WiX 修改設定讓 msi 安裝檔,能夠在安裝完成,自動去把 jpdfbookmarks 的安裝目錄, 加入到 PATH 環境變數, 這個部份, 我還沒有找出來如何去完成。
+
+- [ ] MacOS 的打包 : 等以後如果我有 MacOS 的環境, 之後再說!!!
+
+== 技術點說明
+
+在這個專案中, 可以學習到的相關技術點說明如下:
+
+=== JPackage
+
+在這個專案中, 主要使用的是 JDK 內建的 jpackage 功能。
+
+jpackage 的限制: 只能在 單一平台(host os) 產生對應的 native installer 檔案。
+
+* 在 Linux (deb - Ubuntu ) 只能產生 .deb 檔, 不能產生 .rpm , .msi 等格式的安裝檔案。
+* 在 Linux (rpm - Oracle Linux , Red Hat Linux) 只能產生 .rpm 檔, 不能產生 .deb, .msi 等格式的安裝檔案。
+* 在 Windows 只能產生 .msi 或 .exe 檔, 不能產生 .deb, .rpm 等格式的安裝檔案。
+
+所以,如果要產生對應不同平台的安裝檔,必須要到不同平台去一一產生對應的 native installer。
+
+此外　jpakcage 有些參數是對應特定平台，如果在 windows 平台給定 linux 特有的參數則會發生錯誤，而導致打包native installer 檔案失敗。
+
+另外像 --icon 參數, Windows 只接受 .ico 檔案格式 , 而 Linux 平台則是只接受 .png 檔案格式。
+
+=== Open With 功能
+
+要讓作業系統知道某個 格式(.pdf 或是 .html) 要對應什麼mime type 用什麼程式開啟 , 我們可以使用 `--file-associations jpdfbookmarks.mime.properties` 把相關設定指定在一個外部檔案中, 格式如下:
+
+
+[source,bash]
+.jpdfbookmarks.mime.properties
+----
+mime-type=application/pdf
+extension=pdf
+description=PDF
+----
+
+到這裡只是跟 OS 告知,我們的 jpdfbookmarks可以處理 pdf
+
+但是 linux 作業系統並不會在 Open With 時 , 把 jpdfbookmarks 加入。
+
+因此我們覆寫了原來的 .desktop 檔案。請注意 裡面的 `%f`, 一定要加入。才能讓作業系統有 Open With 或是 Open With Other Application 可以出現在系統選單當中。
+
+[source,bash]
+.jpdfbookmarks.desktop
+----
+[Desktop Entry]
+Name=jpdfbookmarks
+Comment=jpdfbookmarks
+Exec=/opt/jpdfbookmarks/bin/jpdfbookmarks %f
+Icon=/opt/jpdfbookmarks/lib/jpdfbookmarks.png
+Terminal=false
+Type=Application
+Categories=Office
+MimeType=application/pdf
+----
+
+
+[source,bash]
+.jpdfbookmarks_cli.desktop
+----
+[Desktop Entry]
+Name=jpdfbookmarks
+Comment=jpdfbookmarks
+Exec=/opt/jpdfbookmarks/bin/jpdfbookmarks %f
+Icon=/opt/jpdfbookmarks/lib/jpdfbookmarks.png
+Terminal=true
+Type=Application
+Categories=Office
+MimeType=application/pdf
+----
+
+
+=== 第二個啟動程式
+
+jpackage 預設只會有一個啟動程式點, 但是 JPdfBookmarks 除了 jpdfbookmarks 外還有一個  jpdfbookmarks_cli,
+它必須是 terminal / console , 而且必須是沒有 splash 啟動畫面。
+
+我們使用 `--add-launcher jpdfbookmarks_cli=jpdfbookmarks_cli.linux.launcher` 
+或是 `--add-launcher jpdfbookmarks_cli=jpdfbookmarks_cli.windows.launcher` 
+來讓 jpackage 知道要加入第二組啟動程式 `jpdfbookmarks_cli`
+
+
+[source,bash]
+.jpdfbookmarks_cli.windows.launcher
+----
+win-console=true
+java-options="-Djava.util.logging.config.file=$APPDIR/conf/jpdfbookmarks.logging.properties" "-splash:" "-ms64m" "-mx512m"
+----
+注意了 windows 這裡 win-console 的值是設定為 true, 用來告知jpdfbookmarks程式啟動時是要有 console 的。
+此外像 java-options 後面的參數 可以放多個 , 使用 `"` 來包起來 , 多個參數之間使用 ` `(空白) 隔開
+
+
+[source,bash]
+.jpdfbookmarks_cli.linux.launcher
+----
+java-options="-Djava.util.logging.config.file=$APPDIR/conf/jpdfbookmarks.logging.properties" "-splash:" "-ms64m" "-mx512m"
+----
+
+但是像在 Linux 並沒有一個叫 linux console 的, 這個部份,其實要透過 .desktop 檔案的修改
+
+注意:以下  `Terminal=true`
+
+[source,bash]
+.jpdfbookmarks_cli.desktop
+----
+[Desktop Entry]
+Name=jpdfbookmarks
+Comment=jpdfbookmarks
+Exec=/opt/jpdfbookmarks/bin/jpdfbookmarks %f
+Icon=/opt/jpdfbookmarks/lib/jpdfbookmarks.png
+Terminal=true
+Type=Application
+Categories=Office
+MimeType=application/pdf
+----
+
+
+=== 讓程式自動加入到PATH(Linux)
+
+我們找到
+ 
+* Linux - Deb 是要透過 `postinst` 來在安裝完成去加入, `postrm` 在移除後把設定拿掉
+* Linux - Rpm 是要透過 `jpdfbookmarks.spec`, 去做加入與移除
+
+==== Linux - Deb
+
+[source,bash]
+.postinst
+----
+...
+case "$1" in
+    configure)
+xdg-desktop-menu install /opt/jpdfbookmarks/lib/jpdfbookmarks-jpdfbookmarks.desktop
+xdg-mime install /opt/jpdfbookmarks/lib/jpdfbookmarks-jpdfbookmarks-MimeInfo.xml
+xdg-desktop-menu install /opt/jpdfbookmarks/lib/jpdfbookmarks-jpdfbookmarks_cli.desktop
+        # register /usr/bin/jpdfbookmarks as a jpdfbookmarks in the alternatives system
+        update-alternatives \
+            --install \
+                /usr/bin/jpdfbookmarks \
+                jpdfbookmarks \
+                /opt/jpdfbookmarks/bin/jpdfbookmarks \
+                50 
+        # register /usr/bin/jpdfbookmarks_cli as a jpdfbookmarks_cli in the alternatives system
+        update-alternatives \
+            --install \
+                /usr/bin/jpdfbookmarks_cli \
+                jpdfbookmarks_cli \
+                /opt/jpdfbookmarks/bin/jpdfbookmarks_cli \
+                50      
+    ;;
+...
+----
+
+
+[source,bash]
+.postrm
+----
+...
+case "$1" in
+    purge|remove)
+           update-alternatives --remove jpdfbookmarks /usr/bin/jpdfbookmarks || true 
+           update-alternatives --remove jpdfbookmarks_cli /usr/bin/jpdfbookmarks_cli || true            
+    ;;
+...
+----
+
+
+==== Linux - Rpm
+
+
+[source,bash]
+.jpdfbookmarks.spec
+----
+...
+%post
+xdg-desktop-menu install /opt/jpdfbookmarks/lib/jpdfbookmarks-jpdfbookmarks.desktop
+xdg-mime install /opt/jpdfbookmarks/lib/jpdfbookmarks-jpdfbookmarks-MimeInfo.xml
+xdg-desktop-menu install /opt/jpdfbookmarks/lib/jpdfbookmarks-jpdfbookmarks_cli.desktop
+        # register /usr/bin/jpdfbookmarks as a jpdfbookmarks in the alternatives system
+        update-alternatives \
+            --install \
+                /usr/bin/jpdfbookmarks \
+                jpdfbookmarks \
+                /opt/jpdfbookmarks/bin/jpdfbookmarks \
+                50 
+        # register /usr/bin/jpdfbookmarks_cli as a jpdfbookmarks in the alternatives system
+        update-alternatives \
+            --install \
+                /usr/bin/jpdfbookmarks_cli \
+                jpdfbookmarks_cli \
+                /opt/jpdfbookmarks/bin/jpdfbookmarks_cli \
+                50
+...
+xdg-desktop-menu uninstall /opt/jpdfbookmarks/lib/jpdfbookmarks-jpdfbookmarks.desktop
+xdg-mime uninstall /opt/jpdfbookmarks/lib/jpdfbookmarks-jpdfbookmarks-MimeInfo.xml
+uninstall_default_mime_handler jpdfbookmarks-jpdfbookmarks.desktop application/pdf
+xdg-desktop-menu uninstall /opt/jpdfbookmarks/lib/jpdfbookmarks-jpdfbookmarks_cli.desktop
+update-alternatives --remove jpdfbookmarks /usr/bin/jpdfbookmarks || true 
+update-alternatives --remove jpdfbookmarks_cli /usr/bin/jpdfbookmarks_cli || true    
+...
+----
+
+很抱歉 , Wix 的加入 PATH 還沒有找到如何去做！！！
+
+
+=== 讓 jpackage 使用自訂檔案覆蓋預設
+
+我們使用 `--resource-dir linuxOverride` 指定要覆蓋的檔案目錄在哪裡!!!
+
+* Linux 可以使用自訂檔案部份包含 `launcher.png`, `launcher.desktop`;
+** 注意: 這裡的 launcher 應該換成是 app name , 例如 jpdfbookmarks, jpdfbookmarks_cli , 所以對應的檔案會是 
+ jpdfbookmarks.png, jpdfbookmarks_cli.png , jpdfbookmarks.desktop, jpdfbookmarks_cli.desktop
+
+* Linux DEB 可以使用自訂檔案部份包含 `control`,`preinst`,`prerm`,`postinst`,`postrm`,`copyright`
+
+* Linux RPM 可以使用自訂檔案部份包含 `package-name.spec`, 這裡的 package-name 與 app name 相同, 所以會是 jpdfbookmarks.spec
+
+
+Windows 與 MacOS 暫時沒有研究出來
+
+=== 如何知道這些要覆蓋的檔案內容?
+
+在執行 jpackage 時 , 加上 `--temp xxxx` 就可以了, 你可以在 xxxx 目錄找到 jpackage 根據你的參數要打包出來的檔案, 我們可以把覺得有需要修改的部份複製出來，再加以修改。
+
+我把修改的部份複製放到 linuxOverride 目錄下。
+前面提到的 `jpdfbookmarks.desktop`, `jpdfbookmarks_cli.desktop` 以及 `postinst`, `postrm` , `jpdfbookmarks.spec` 都是從 jpackage 加上 `--temp xxxx` 產出 xxxx 子目錄複製出來後 , 加以修改。
+
+[IMPORTANT]
+.限制
+====
+* 如果我們把 app name , launcher name 做變更了, 對應的 build image 裡面的檔案也會有所變動,
+請記得重作 --temp xxxx , 把裡面的相關 `xxxxx.desktop`, `yyyyy_cli.desktop` 以及 `postinst`, `postrm` , `xxxxx.spec` 等檔案複製出來修改。
+* 此外名稱 建議統一使用 **小寫**
+====
+
+
+=== 限制 - jpdfbookmarks.spec
+
+jpdfbookmarks.spec 裡面把 `Version: 3.0.2` 寫在裡面, 我只好複製多個相同內容檔案,然後把 `Version: x.x.x` 做修改, 因此有了 `jpdfbookmarks.spec.2.5.2`, `jpdfbookmarks.spec.2.5.4`, `jpdfbookmarks.spec.3.0.2`
+在要執行前 , 複製  `jpdfbookmarks.spec.2.5.2` 為  `jpdfbookmarks.spec`
+
+
+=== JRE Runtime image 的精簡化
+
+如果不設定額外參數 , jpackage 會自動幫你把 jre 打包進去。
+
+但是 jpackage 可以根據 ‵--add-modules‵　給定的 module , 來決定要把哪些 module 打包進去。
+
+有加入 ‵--add-modules‵　參數的 jpdfbookmarks的 msi/deb/rpm 可以從 58 MB 變成 34 MB。
+
+==== 如何知道 add-modules 要加入哪些 module？
+
+[source,bash]
+.找出 jpdfbookmarks.jar 需要哪些 module
+----
+jdeps -cp "lib/*" \
+    --module-path "lib/*" \
+    --multi-release 9 \
+    --print-module-deps \
+    --ignore-missing-deps \
+    jpdfbookmarks.jar 
+----
+
+然後再到 lib 目錄下 , 把裡面的 jar 都用類似上面的指令找出對應的 module
+
+最後整理出來, 再使用 `,`區隔。
+
+==== **可以**不需要使用 jlinks 預先產生 jre runtime
+在 jpackage 直接加上參數 ‵--add-modules‵ 就能讓 精簡的 jre image 套用進去。
+
+
+=== 不需要是 JDK 9 編譯打包的 Java 應用程式才能使用
+
+在這個專案中, 我們直接下載 jpdfbookmarks 2.5.2 (使用 Java 6 編譯打包) 重新拆開, 然後使用 jpackage 指令重新打包。
+
+所以不論你的程式是否是使用 JDK 9+ 編譯打包 , 你都可以利用 jpackage 重新打包出 native installer。
+
+=== Java Options And Splash Screen
+
+可以使用  java-options 指定原本要用外部 參數給定的參數, 如 `-DXXXXX` , `-mxXXXm`, `-msXXXm`
+
+[source,bash]
+----
+--java-options "-Djava.util.logging.config.file=$APPDIR/conf/jpdfbookmarks.logging.properties"
+--java-options "-splash:$APPDIR/splash.png"
+--java-options "-ms64m"
+--java-options "-mx512m"
+----
+
+此外要注意的是 Splash 畫面, 原本在 main jar 裡面有設定的話, 在這裡不會生效, 要透過 java-options參數給定。
+此外可以使用 `$APPDIR` 代用程式封裝後的安裝目錄 
+[source,bash]
+----
+--java-options "-splash:$APPDIR/splash.png"
+----
+
+=== 測試過程中的一個大`坑`
+
+在使用 Oracle Linux (RPM) 測試 jpackage 時, 使用的現成的 vagrant box 設定
+
+[source,bash]
+----
+$ mkdir VM_oraclelinux_8-btrfs
+$ cd VM_oraclelinux_8-btrfs
+$ vagrant init oraclelinux/8-btrfs https://oracle.github.io/vagrant-projects/boxes/oraclelinux/8-btrfs.json
+$ vagrant up
+$ vagrant ssh
+...
+----
+
+使用 jpackage 一直會報錯誤：
+ `Error: Invalid or unsupported type: [null]` 或是 `Error: Invalid or unsupported type: [rpm]`
+
+這個錯誤, 原本以為是使用 SDKMAN 安裝 jdk 有關 , 後來改用 yum install java-17* 也是無解!!!
+
+最後的解決方式是: 要安裝 'Development Tools' 指令是 `sudo yum groupinstall 'Development Tools'`
+
+這裡把它整理在　`build-installer-rpm-pre-setup.sh`
+
+== 指令精簡化
+
+把針對平台相關的參數, 抽出來放到外部檔案, 使用 @XXXX , 
+讓指令主體幾乎都相似, 把針對平台或是格式相關的都隔開在外部檔案中,
+此外把針對版本的部份, 抽出來的指令主體
+
+[source,bash]
+.deb build
+----
+jpackage @jpdfbookmarks.app.jpackage.settings \
+ @jpdfbookmarks.linux.jpackage.settings  \
+ --add-launcher jpdfbookmarks_cli=jpdfbookmarks_cli.linux.launcher  \
+ --linux-app-release snapshot-1 \
+ --linux-deb-maintainer "Flaviano Petrocchi<flavianopetrocchi@gmail.com>" \
+ --app-version 3.0.2 \
+ --add-modules  java.base,java.datatransfer,java.desktop,java.logging,java.management,java.naming,java.prefs,java.sql,java.xml
+----
+
+[source,bash]
+.rpm build
+----
+jpackage @jpdfbookmarks.app.jpackage.settings \
+ @jpdfbookmarks.linux.jpackage.settings  \
+ --add-launcher jpdfbookmarks_cli=jpdfbookmarks_cli.linux.launcher  \
+ --linux-app-release snapshot-1 \
+ --app-version 3.0.2 \
+ --add-modules  java.base,java.datatransfer,java.desktop,java.logging,java.management,java.naming,java.prefs,java.sql,java.xml
+----
+
+[source,bash]
+.msi build
+----
+jpackage @jpdfbookmarks.app.jpackage.settings ^
+ @jpdfbookmarks.windows.jpackage.settings ^
+ --add-launcher jpdfbookmarks_cli=jpdfbookmarks_cli.windows.launcher  ^
+ --app-version 3.0.2 ^
+ --add-modules   java.base,java.datatransfer,java.desktop,java.logging,java.management,java.naming,java.prefs,java.sql,java.xml
+----
+
+
+
+== 參考資料來源
+
+* Packaging Tool User's Guide(https://docs.oracle.com/en/java/javase/17/jpackage/packaging-tool-user-guide.pdf)
+
+* 顯示指令說明 (https://docs.oracle.com/en/java/javase/17/docs/specs/man/jpackage.html)
+
+== 總結
+
+* 在這個專案中, 你可以透過這個專案, 幫你在你的機器重新打包 jpdfbookmarks 的 native installer。
+* 新的 Native Installer , 可以讓你安裝後, 用檔案總管, 點選 PDF 後, 可以使用 `Open With`。
+* 新的 Native Installer , 可以讓你安裝後, 不用自己去設定 `PATH` 或是去設定連結到 `/usr/bin`(Linux)。
+* 還有在 Linux - RPM 執行 jpackage 碰到的 `坑` 以及自己找到的解決方法
+* 在這個專案中, 展示了多個 jpackage 的不同面向的參數使用方式, 讓你可以更了解文件中參數的意義是什麼!!!
