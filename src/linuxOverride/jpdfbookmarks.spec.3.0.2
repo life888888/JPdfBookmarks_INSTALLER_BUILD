@@ -3,7 +3,7 @@ Name: jpdfbookmarks
 Version: 3.0.2
 Release: 1
 License: Unknown
-Vendor: Unknown
+Vendor: Flaviano Petrocchi
 
 %if "x" != "x"
 URL: 
