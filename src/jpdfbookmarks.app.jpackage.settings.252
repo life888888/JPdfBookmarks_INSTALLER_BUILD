@@ -1,7 +1,6 @@
 --name jpdfbookmarks
 --input jpdfbookmarks
 --main-jar jpdfbookmarks.jar
---description "This software allows you to create and edit bookmarks on existing pdf files."
 --file-associations "jpdfbookmarks.mime.properties"
 --java-options "-Djava.util.logging.config.file=$APPDIR/conf/jpdfbookmarks.logging.properties"
 --java-options "-splash:$APPDIR/splash.png"
