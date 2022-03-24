@@ -13,3 +13,7 @@ source "$HOME/.sdkman/bin/sdkman-init.sh"
 # INSTALL JDK 17
 sdk install java 17.0.2-tem 
 
+# Exit the terminal
+echo Need to close the terminal / Console now to make SDKMAN worked
+echo Press enter to continue; read dummy;
+exit 0
