@@ -6,3 +6,4 @@
 --win-help-url http://flavianopetrocchi.blogspot.com/
 --icon "jpdfbookmarks/jpdfbookmarks.ico"
 --win-dir-chooser
+--resource-dir windowsOverride
