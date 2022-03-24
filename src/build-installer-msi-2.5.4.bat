@@ -89,9 +89,6 @@ EXIT 4
 
 rename jpdfbookmarks-2.5.4 jpdfbookmarks
 
-copy add-jpdfbookmarks-PATH.ps1 jpdfbookmarks\
-copy setup-jpasbookmarks-PATH.bat jpdfbookmarks\
-
 del jpdfbookmarks\jpdfbookmarks
 
 del jpdfbookmarks\jpdfbookmarks_cli
