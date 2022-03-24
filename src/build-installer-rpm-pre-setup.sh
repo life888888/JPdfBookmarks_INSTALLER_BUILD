@@ -1,12 +1,12 @@
 # Build jpdfbookmarks installer - rpm - pre-setup
 sudo yum update -y
 
-# INSTALL Development Tools
+# INSTALL RPM Development Tools
 # VERY IMPORTANT!!! MUST INSTALL THIS!!!
-sudo yum groupinstall 'Development Tools'
+sudo yum groupinstall 'RPM Development Tools'
+
 
 # INSTALL SDKMAN
-sudo yum install zip unzip -y
 curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 
