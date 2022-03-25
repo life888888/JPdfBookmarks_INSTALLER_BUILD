@@ -1,10 +1,10 @@
 REM Build jpdfbookmarks installer - msi - 3.0.2
 @echo off
 
-REM CHECK WiX TOOLSETS IS INSTALL AND SETTING OK ?
+REM CHECK WiX TOOLSET IS INSTALL AND SETTING OK ?
 WHERE light
 IF %ERRORLEVEL% NEQ 0 (
-    ECHO light command wasn't found, please check WiX Toolsets Install is finish?
+    ECHO light command wasn't found, please check WiX Toolset Install is finish?
 	goto WiX_NOT_READY
 ) ELSE (
     REM ECHO light command is ready. Process next step...
