@@ -2,18 +2,18 @@
 life888888
 :doctype: article
 :encoding: utf-8
-:lang: zh
+:lang: en
 :toc: left
 :numbered:
 :experimental:
 :imagesdir: images
 :hide-uri-scheme:
 
-This is an auxiliary tool command file used to help jpdfbookmarks create Native Installer (Windows .msi , Linux .rpm , Linux .deb).
+This is an auxiliary utility script files used to help jpdfbookmarks create Native Installer (Windows .msi , Linux .rpm , Linux .deb).
 
 The following content is translated from Chinese to English using Google Translate.
 
-== what this aids directive can do
+== what this auxiliary utility script files can do
 
 * Generate jpdfbookmarks Native Installer (Windows .msi , Linux .rpm , Linux .deb)
 * JRE has been packaged, users do not need to install JRE.
@@ -744,7 +744,7 @@ msiexec /i jpdfbookmarks-3.0.2_x64.msi INSTALLDIR="C:\TOOLS\jpdfbookmarks" /qb
 
 === `Strange trap` error during testing
 
-==== jpackage always reports an error: `Error: Invalid or unsupported type: [null]` 或是 `Error: Invalid or unsupported type: [rpm]`
+==== jpackage always reports an error: `Error: Invalid or unsupported type: [null]` or `Error: Invalid or unsupported type: [rpm]`
 
 Out-of-the-box vagrant box settings to use when testing jpackage with Oracle Linux (RPM):
 
