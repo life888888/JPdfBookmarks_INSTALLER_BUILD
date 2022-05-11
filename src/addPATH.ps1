@@ -1,3 +1,5 @@
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
 $dir = Get-Location
 
 $path = [Environment]::GetEnvironmentVariable('PATH', 'User') -split ';' |
